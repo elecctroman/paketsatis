@@ -6,7 +6,7 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
-<FilesMatch "\.(php|phar)$">
+
     Require all denied
 </FilesMatch>
 
