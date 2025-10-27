@@ -1,0 +1,19 @@
+# Redirect all web requests to the public/ directory where the front controller lives.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If the request is already for the public directory, serve as-is.
+    RewriteCond %{REQUEST_URI} ^/public/ [NC]
+    RewriteRule ^ - [L]
+
+    # Serve existing files or directories directly.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Otherwise, funnel everything through public/ preserving the path/query.
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
+
+# Fallback: deny directory listings if mod_rewrite is unavailable.
+Options -Indexes

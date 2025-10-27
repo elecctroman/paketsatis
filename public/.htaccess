@@ -1,0 +1,47 @@
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(php|phar)$">
+        Require all denied
+    </FilesMatch>
+    <Files "index.php">
+        Require all granted
+    </Files>
+    <Files "installer.php">
+        Require all granted
+    </Files>
+    <Files "bootstrap.php">
+        Require all granted
+    </Files>
+    <Directory "../config">
+        Require all denied
+    </Directory>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(php|phar)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    <Files "index.php">
+        Order allow,deny
+        Allow from all
+    </Files>
+    <Files "installer.php">
+        Order allow,deny
+        Allow from all
+    </Files>
+    <Files "bootstrap.php">
+        Order allow,deny
+        Allow from all
+    </Files>
+    <Directory "../config">
+        Order allow,deny
+        Deny from all
+    </Directory>
+</IfModule>
