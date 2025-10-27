@@ -6,7 +6,7 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
-<FilesMatch "^(?!index\.php$|installer\.php$|bootstrap\.php$).*\.(php|phar)$">
+
     Require all denied
 </FilesMatch>
 
